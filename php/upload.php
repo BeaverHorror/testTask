@@ -111,24 +111,24 @@ if (isset($_FILES[$input_name])) {
 		if (!empty($success)) {
 			echo '<p>' . $success . '</p>';
 
-            // Функция которая откроет файл прочтёт его создаст новые файлы заполнит новые файлы
+            // Функция, которая откроет файл, прочтёт его, создаст и заполнит новые файлы на его основе
+            // Получение информации из файла
+            $arrSvg = file('upload/' . $name); // Построчный массив данных svg файла
 
-            # Получение информации из файла
-            $arr = file('upload/' . $name);
+			$arrNameFile = array(); // Массив имён файлов (первый столбец svg файла)
+			$arrDataFile = array(); // Массив данных файлов (второй столбец svg файла)
+			$arrExtnFile = array(); // Массив расширений файлов (после последней точки имени файла)
 
-            // Считываем данные с файлов после разделителя ','
-            $txt = trim(strstr($arr[0], ','), ',');
-			$txt = mb_convert_encoding($txt, "UTF-8", "windows-1251");
-            $log = trim(strstr($arr[1], ','), ',');
-			$log = mb_convert_encoding($log, "UTF-8", "windows-1251");
-            $html = trim(strstr($arr[2], ','), ',');
-			$html = mb_convert_encoding($html, "UTF-8", "windows-1251");
+			// Разделителем столбцов в svg файле является запятая
+			for($j = 0; $j < count($arrSvg); $j++){
+				$arrNameFile[$j] = trim(strstr($arrSvg[$j], ',', true)); 									// Т.к. запятая разделитель имя файла до запятой
+				$arrNameFile[$j] = mb_convert_encoding($arrNameFile[$j], "UTF-8", "windows-1251"); 	// Русские символы
+				$arrDataFile[$j] = trim(strstr($arrSvg[$j], ','), ',');										// Данные файла (после запятой)
+				$arrDataFile[$j] = mb_convert_encoding($arrDataFile[$j], "UTF-8", "windows-1251"); 	// Русские символы
+				$arrExtnFile[$j] = explode('.', $arrNameFile[$j])[1]; // Расширения файлов
 
-            // Создаём и заполняем файлы
-            file_put_contents('upload/1.txt', $txt);
-            file_put_contents('upload/2.log', $log);
-            file_put_contents('upload/3.html', $html);
-
+				file_put_contents('upload/' . ($j+1) . '.' . $arrExtnFile[$j], $arrDataFile[$j]); // Создаём и заполняем файлы
+			}
 		} else {
 			echo '<p>' . $error . '</p>';
 		}
