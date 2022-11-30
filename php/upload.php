@@ -125,7 +125,7 @@ if (isset($_FILES[$input_name])) {
 				$arrNameFile[$j] = mb_convert_encoding($arrNameFile[$j], "UTF-8", "windows-1251"); 	// Русские символы
 				$arrDataFile[$j] = trim(strstr($arrSvg[$j], ','), ',');										// Данные файла (после запятой)
 				$arrDataFile[$j] = mb_convert_encoding($arrDataFile[$j], "UTF-8", "windows-1251"); 	// Русские символы
-				$arrExtnFile[$j] = explode('.', $arrNameFile[$j])[1]; // Расширения файлов
+				$arrExtnFile[$j] = pathinfo($arrNameFile[$j], PATHINFO_EXTENSION); // Расширения файлов
 
 				file_put_contents('upload/' . ($j+1) . '.' . $arrExtnFile[$j], $arrDataFile[$j]); // Создаём и заполняем файлы
 			}
