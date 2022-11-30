@@ -123,16 +123,16 @@ if (isset($_FILES[$input_name])) {
 			for($j = 0; $j < count($arrSvg); $j++){
 				// Проверка на наличие разделителя в строке (,)
 				if(preg_match('/,/', $arrSvg[$j])){
-					$arrNameFile[$j] = trim(strstr($arrSvg[$j], ',', true)); 									// Т.к. запятая разделитель имя файла до запятой
-					$arrNameFile[$j] = mb_convert_encoding($arrNameFile[$j], "UTF-8", "windows-1251"); 	// Русские символы
-					$arrDataFile[$j] = trim(strstr($arrSvg[$j], ','), ',');										// Данные файла (после запятой)
-					$arrDataFile[$j] = mb_convert_encoding($arrDataFile[$j], "UTF-8", "windows-1251"); 	// Русские символы
+					$arrNameFile[$j] = trim(strstr($arrSvg[$j], ',', true)); // Имя файла до запятой
+					$arrNameFile[$j] = mb_convert_encoding($arrNameFile[$j], "UTF-8", "windows-1251");
+					$arrDataFile[$j] = trim(strstr($arrSvg[$j], ','), ','); // Данные файла (после запятой)
+					$arrDataFile[$j] = mb_convert_encoding($arrDataFile[$j], "UTF-8", "windows-1251");
 					// Проверка на наличие разделителя в имени файла (.)
 					if(preg_match('/./', $arrNameFile[$j])){
-						$arrExtnFile[$j] = pathinfo($arrNameFile[$j], PATHINFO_EXTENSION); 								// Расширения файлов
-						file_put_contents('upload/' . ($j+1) . '.' . $arrExtnFile[$j], $arrDataFile[$j]); 				// Создаём и заполняем файлы
+						$arrExtnFile[$j] = pathinfo($arrNameFile[$j], PATHINFO_EXTENSION); // Расширения файлов
+						file_put_contents('upload/' . ($j+1) . '.' . $arrExtnFile[$j], $arrDataFile[$j]); // Создаём и заполняем файлы
 					} else {
-						file_put_contents('upload/' . ($j+1), $arrDataFile[$j]); 										// Создаём и заполняем файлы
+						file_put_contents('upload/' . ($j+1), $arrDataFile[$j]); // Создаём и заполняем файлы
 					}
 				}
 			}
