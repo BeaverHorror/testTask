@@ -118,8 +118,11 @@ if (isset($_FILES[$input_name])) {
 
             // Считываем данные с файлов после разделителя ','
             $txt = trim(strstr($arr[0], ','), ',');
+			$txt = mb_convert_encoding($txt, "UTF-8", "windows-1251");
             $log = trim(strstr($arr[1], ','), ',');
+			$log = mb_convert_encoding($log, "UTF-8", "windows-1251");
             $html = trim(strstr($arr[2], ','), ',');
+			$html = mb_convert_encoding($html, "UTF-8", "windows-1251");
 
             // Создаём и заполняем файлы
             file_put_contents('upload/1.txt', $txt);
