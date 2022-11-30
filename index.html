@@ -13,9 +13,16 @@
 
 	<body>
 
-	<div class="mainWindow">
-		<button id="uploadFile"> Загрузить файл </button>
-	</div>
+      	<form action="/php/upload.php" method="post" enctype="multipart/form-data">
+			<input type="file" name="file">
+			<input type="submit" value="Отправить">
+		</form>
+      
+      	<!--
+		<div class="mainWindow">
+			<button id="uploadFile"> Загрузить файл </button>
+		</div>
+		-->
 
    </body>
 
