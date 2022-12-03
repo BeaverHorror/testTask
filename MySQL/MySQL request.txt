@@ -1,0 +1,112 @@
+CREATE DATABASE Sport;
+
+
+CREATE TABLE sport.sportsman (
+  Id INT NOT NULL AUTO_INCREMENT,
+  FirstName NVARCHAR(45) NOT NULL,
+  LastName NVARCHAR(45) NULL,
+  Patronymic NVARCHAR(45) NULL,
+  Email VARCHAR(45) NOT NULL UNIQUE,
+  Telephone VARCHAR(45) NOT NULL UNIQUE,
+  BirthDayData DATE NOT NULL,
+  DateRecordCreated TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PassportNumber INT NOT NULL UNIQUE,
+  MiddlePlace INT NULL,
+  Biography NVARCHAR(45) NULL,
+  VideoPresentation LONGBLOB NULL,
+  PRIMARY KEY (Id),
+  Check(Telephone LIKE '%+7%'),
+  Check(PassportNumber >= 100000 AND PassportNumber <= 999999)
+  );
+
+
+
+CREATE TABLE sport.competitions (
+  Id INT NOT NULL AUTO_INCREMENT,
+  Discipline NVARCHAR(45) NOT NULL UNIQUE,
+  DateRecordCreated TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  DateEvent DATETIME NOT NULL UNIQUE,
+  UnitMeasurement NVARCHAR(45) NULL UNIQUE,
+  PRIMARY KEY (Id)
+  );
+
+
+
+CREATE TABLE sport.results (
+  Id INT NOT NULL AUTO_INCREMENT,
+  IdSportsman INT NOT NULL REFERENCES sportsman(Id),
+  IdCompetitions INT NOT NULL REFERENCES competitions(Id),
+  Result NVARCHAR(45) NOT NULL,
+  PRIMARY KEY (Id)
+  );
+
+
+
+INSERT sport.sportsman(FirstName, LastName, Patronymic, Email, Telephone, BirthDayData, PassportNumber, MiddlePlace, Biography) 
+VALUES ('Александр', 'Кучеренков', 'Петрович', 'qwert1@gmail.com', '+79610000001', '2000-09-25', 100001, 2, 'Просто Саня');
+INSERT sport.sportsman(FirstName, LastName, Patronymic, Email, Telephone, BirthDayData, PassportNumber, MiddlePlace, Biography) 
+VALUES ('Николай', 'Зверев', 'Иванович', 'qwert2@gmail.com', '+79610000002', '2001-10-21', 100002, 4, 'Просто Мыкола');
+INSERT sport.sportsman(FirstName, LastName, Patronymic, Email, Telephone, BirthDayData, PassportNumber, MiddlePlace, Biography) 
+VALUES ('Михаил', 'Лебедев', 'Викторович', 'qwert3@gmail.com', '+79610000003', '1999-03-07', 100003, 3, 'Просто Миха');
+INSERT sport.sportsman(FirstName, LastName, Patronymic, Email, Telephone, BirthDayData, PassportNumber, MiddlePlace, Biography) 
+VALUES ('Владислав', 'Гордеев', 'Артемьевич', 'qwert4@gmail.com', '+79610000004', '2003-05-13', 100004, 5, 'Просто Владик');
+INSERT sport.sportsman(FirstName, LastName, Patronymic, Email, Telephone, BirthDayData, PassportNumber, MiddlePlace, Biography) 
+VALUES ('Игорь', 'Банников', 'Александрович', 'qwert5@gmail.com', '+79610000005', '2002-11-17', 100005, 3, 'Просто Игорь');
+INSERT sport.sportsman(FirstName, LastName, Patronymic, Email, Telephone, BirthDayData, PassportNumber, MiddlePlace, Biography) 
+VALUES ('Инакентий', 'Лапухов', 'Петрович', 'qwert6@gmail.com', '+79610000006', '2000-09-25', 100006, 2 ,'Просто Саня');
+INSERT sport.sportsman(FirstName, LastName, Patronymic, Email, Telephone, BirthDayData, PassportNumber, MiddlePlace, Biography) 
+VALUES ('Аркадий', 'Пахомов', 'Иванович', 'qwert7@gmail.com', '+79610000007', '2001-10-21', 100007, 4, 'Просто Мыкола');
+INSERT sport.sportsman(FirstName, LastName, Patronymic, Email, Telephone, BirthDayData, PassportNumber, MiddlePlace, Biography) 
+VALUES ('Владлен', 'Захаров', 'Викторович', 'qwert8@gmail.com', '+79610000008', '1999-03-07', 100008, 3, 'Просто Миха');
+INSERT sport.sportsman(FirstName, LastName, Patronymic, Email, Telephone, BirthDayData, PassportNumber, MiddlePlace, Biography) 
+VALUES ('Иван', 'Сидоров', 'Артемьевич', 'qwert9@gmail.com', '+79610000009', '2003-05-13', 100009, 5, 'Просто Владик');
+INSERT sport.sportsman(FirstName, LastName, Patronymic, Email, Telephone, BirthDayData, PassportNumber, MiddlePlace, Biography) 
+VALUES ('Кирил', 'Бондарев', 'Александрович', 'qwert10@gmail.com', '+79610000010', '2002-11-17', 100010, 3, 'Просто Игорь');
+
+
+INSERT sport.competitions(Discipline, DateEvent, UnitMeasurement) 
+VALUES ('Бег 100', '2000-09-25-15-30-00', 'Секунда');
+INSERT sport.competitions(Discipline, DateEvent, UnitMeasurement) 
+VALUES ('Стрельба', '2022-12-05-15-30-00', 'Количество попаданий');
+INSERT sport.competitions(Discipline, DateEvent, UnitMeasurement) 
+VALUES ('Прыжок с разбега', '2000-09-25-12-30-00', 'Сантиметр');
+INSERT sport.competitions(Discipline, DateEvent, UnitMeasurement) 
+VALUES ('Прыжок с шестом', '2000-09-25-13-30-00', 'Сантиметр');
+INSERT sport.competitions(Discipline, DateEvent, UnitMeasurement) 
+VALUES ('Бег 1000', '2000-09-25-15-30-00', 'Секунда');
+INSERT sport.competitions(Discipline, DateEvent, UnitMeasurement) 
+VALUES ('Бег 42195', '2000-09-25-07-30-00', 'Секунда');
+
+
+
+INSERT sport.results(IdSportsman, IdCompetitions, Result) VALUES (1, 1, '13');
+INSERT sport.results(IdSportsman, IdCompetitions, Result) VALUES (2, 1, '14');
+INSERT sport.results(IdSportsman, IdCompetitions, Result) VALUES (2, 5, '157');
+INSERT sport.results(IdSportsman, IdCompetitions, Result) VALUES (3, 5, '142');
+INSERT sport.results(IdSportsman, IdCompetitions, Result) VALUES (3, 1, '18');
+INSERT sport.results(IdSportsman, IdCompetitions, Result) VALUES (3, 3, '765');
+INSERT sport.results(IdSportsman, IdCompetitions, Result) VALUES (4, 1, '16');
+INSERT sport.results(IdSportsman, IdCompetitions, Result) VALUES (4, 5, '166');
+INSERT sport.results(IdSportsman, IdCompetitions, Result) VALUES (5, 5, '170');
+INSERT sport.results(IdSportsman, IdCompetitions, Result) VALUES (1, 1, '14');
+INSERT sport.results(IdSportsman, IdCompetitions, Result) VALUES (2, 1, '15');
+INSERT sport.results(IdSportsman, IdCompetitions, Result) VALUES (3, 5, '176');
+INSERT sport.results(IdSportsman, IdCompetitions, Result) VALUES (4, 5, '154');
+INSERT sport.results(IdSportsman, IdCompetitions, Result) VALUES (5, 1, '19');
+INSERT sport.results(IdSportsman, IdCompetitions, Result) VALUES (6, 3, '745');
+INSERT sport.results(IdSportsman, IdCompetitions, Result) VALUES (7, 1, '17');
+INSERT sport.results(IdSportsman, IdCompetitions, Result) VALUES (8, 5, '167');
+INSERT sport.results(IdSportsman, IdCompetitions, Result) VALUES (9, 5, '165');
+INSERT sport.results(IdSportsman, IdCompetitions, Result) VALUES (10, 5, '180');
+
+
+
+# Выберите из БД топ 5 ФИО спортсменов, больше остальных посетивших соревнований (одним SQL-запросом и без вложенных SELECT’ов)
+SELECT sport.results.IdSportsman, count(*) Quantity, 
+sport.sportsman.FirstName, sport.sportsman.LastName, sport.sportsman.Patronymic
+FROM sport.results 
+INNER JOIN sport.sportsman 
+ON sport.sportsman.Id = sport.results.IdSportsman
+GROUP BY IdSportsman 
+ORDER BY Quantity 
+DESC LIMIT 5;
